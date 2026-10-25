@@ -6,12 +6,15 @@ using TMPro;
 public class GameLoopManager : MonoBehaviour
 {
     [Header("UI Прогресу Еволюції")]
-    public TMP_Text populationText;     // Текст зверху екрана: "Популяція Блейза: 45 / 200"
-    public Slider evolutionProgressBar; // Смужка прогресу до Боса (Max Value = 200)
+    public TMP_Text populationText;     
+    public Slider evolutionProgressBar; 
 
     [Header("Екрани Перемоги та Поразки")]
     public GameObject winPanel;
     public GameObject losePanel;
+
+    [Header("Назва сцени Головного Меню")]
+    public string mainMenuSceneName = "MainMenu"; // Впиши сюди точну назву своєї сцени меню
 
     private bool gameEnded = false;
 
@@ -43,14 +46,14 @@ public class GameLoopManager : MonoBehaviour
             }
         }
 
-        // 1. Оновлюємо верхній UI прогресу
+        // 1. Англійський текст прогресу до Т2, Т3 та Левіафана
         if (populationText != null)
         {
-            string goal = playerUnits < 20 ? "to Т2 (attack enemys): 20" :
-                         (playerUnits < 100 ? "to Т3 (hunters): 100" :
-                         (!AltarNode.BossSpawned ? "To Blaze Arise: 200" : "BLAZE GO!!!"));
+            string goal = playerUnits < 20 ? "Next: Tier 2 (20)" :
+                         (playerUnits < 100 ? "Next: Tier 3 (100)" :
+                         (!AltarNode.BossSpawned ? "AWAKEN LEVIATHAN (200)" : "LEVIATHAN AWAKENED!"));
 
-            populationText.text = $"blazes: {playerUnits} | {goal}";
+            populationText.text = $"Blaze Swarm: {playerUnits} | {goal}";
         }
 
         if (evolutionProgressBar != null)
@@ -76,9 +79,15 @@ public class GameLoopManager : MonoBehaviour
         if (!isWin && losePanel != null) losePanel.SetActive(true);
     }
 
-    // Прив'яжи ці методи до кнопок "Restart" або "Menu" на панелях перемоги/поразки
+    // Метод для кнопки Restart
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Метод для кнопки Main Menu (на WinPanel та LosePanel)
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 }

@@ -53,6 +53,16 @@ public class AltarNode : MonoBehaviour
             BossSpawned = false;
         }
         UpdateVisuals();
+
+        if (owner == NodeOwner.Player && isMainBase)
+        {
+            GlobalPlayerStage = 0;
+            GlobalEnemyStage = 0;
+            BossSpawned = false;
+
+            AudioSource music = Object.FindFirstObjectByType<AudioSource>();
+            if (music != null) music.pitch = 1f; // Повертаємо звичайний темп музики на старті бою
+        }
     }
 
     private void Update()
@@ -99,6 +109,11 @@ public class AltarNode : MonoBehaviour
         if (totalPlayer >= 200 && !BossSpawned)
         {
             BossSpawned = true;
+
+            // Ось сюди додаємо сповільнення/бас для музики:
+            AudioSource music = Object.FindFirstObjectByType<AudioSource>();
+            if (music != null) music.pitch = 0.85f;
+
             foreach (var node in AllNodes)
             {
                 if (node.owner == NodeOwner.Player && node.isMainBase && node.leviathanBossPrefab != null)
