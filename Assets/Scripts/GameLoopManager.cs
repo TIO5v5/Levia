@@ -46,11 +46,11 @@ public class GameLoopManager : MonoBehaviour
         // 1. Оновлюємо верхній UI прогресу
         if (populationText != null)
         {
-            string goal = playerUnits < 20 ? "До Т2 (Атака ворогів): 20" :
-                         (playerUnits < 100 ? "До Т3 (Хижаки): 100" :
-                         (!AltarNode.BossSpawned ? "До Пробудження ЛЕВІАФАНА: 200" : "ЛЕВІАФАН НА ВОЛІ!"));
+            string goal = playerUnits < 20 ? "to Т2 (attack enemys): 20" :
+                         (playerUnits < 100 ? "to Т3 (hunters): 100" :
+                         (!AltarNode.BossSpawned ? "To Blaze Arise: 200" : "BLAZE GO!!!"));
 
-            populationText.text = $"Блейзи: {playerUnits} | {goal}";
+            populationText.text = $"blazes: {playerUnits} | {goal}";
         }
 
         if (evolutionProgressBar != null)
